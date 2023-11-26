@@ -86,14 +86,21 @@ void Game::handleEvents()
           break;
      }
 }
-
+int cnt = 0;
 void Game::update()
 {
      manager.refesh();
      manager.update();
-     if (Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider))
+
+     if (Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider) && wall.isActive())
      {
+          cnt++;
           player.getComponent<TransformComponent>().velocity * -1;
+     }
+
+     if (cnt >= 10)
+     {
+          wall.destroy();
      }
 }
 
